@@ -1,0 +1,334 @@
+tarted PUT "/issues/1" for 223.135.96.2 at 2013-07-11 23:48:54 +0900
+Processing by IssuesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VouBO3m6l4mj9Yf6k629GBbyF0sRHJoqjZcD36Sol3A=", "issue"=>{"is_private"=>"0", "project_id"=>"1", "tracker_id"=>"1", "subject"=>"wawaw", "description"=>"wawaw", "status_id"=>"2", "priority_id"=>"3", "assigned_to_id"=>"", "parent_issue_id"=>"", "start_date"=>"2013-07-10", "due_date"=>"", "estimated_hours"=>"", "done_ratio"=>"0", "notes"=>"更新！", "private_notes"=>"0", "lock_version"=>"1"}, "last_journal_id"=>"1", "commit"=>"送信", "id"=>"1"}
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'session_lifetime' LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'session_timeout' LIMIT 1
+   (0.1ms)  SELECT MAX("settings"."updated_on") AS max_id FROM "settings" 
+Creating scope :sorted. Overwriting existing method User.sorted.
+  User Load (0.5ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."status" = 1 AND "users"."id" = ? LIMIT 1  [["id", 1]]
+  Current user: admin (id=1)
+  Issue Load (0.4ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = ? LIMIT 1  [["id", "1"]]
+  Project Load (0.3ms)  SELECT "projects".* FROM "projects" WHERE "projects"."id" = 1 LIMIT 1
+  EnabledModule Load (0.2ms)  SELECT name FROM "enabled_modules" WHERE "enabled_modules"."project_id" = 1
+  TimeEntryActivity Load (0.3ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('TimeEntryActivity') AND "enumerations"."is_default" = 't' ORDER BY enumerations.position ASC LIMIT 1
+  Tracker Load (0.2ms)  SELECT "trackers".* FROM "trackers" WHERE "trackers"."id" = 1 LIMIT 1
+  IssueCustomField Load (0.3ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields"."is_for_all" = 't' ORDER BY position
+  IssueCustomField Load (0.3ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_projects" ON "custom_fields"."id" = "custom_fields_projects"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_projects"."project_id" = 1 ORDER BY custom_fields.position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_trackers" ON "custom_fields"."id" = "custom_fields_trackers"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_trackers"."tracker_id" = 1
+  Project Load (0.3ms)  SELECT "projects".* FROM "projects" WHERE (projects.status = 1 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))
+  IssueStatus Load (0.2ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  Role Load (0.3ms)  SELECT "roles".* FROM "roles" 
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."id" = 1 LIMIT 1
+  WorkflowTransition Load (0.6ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  IssueStatus Load (0.4ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+  IssueRelation Load (0.2ms)  SELECT "issue_relations".* FROM "issue_relations" WHERE "issue_relations"."issue_to_id" = 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  WorkflowPermission Load (0.5ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowPermission') AND "workflows"."tracker_id" = 1 AND "workflows"."old_status_id" = 2 AND "workflows"."role_id" IN (1, 2, 3, 4, 5)
+  CACHE (0.0ms)  SELECT "projects".* FROM "projects" WHERE (projects.status = 1 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))
+  CACHE (0.0ms)  SELECT "trackers".* FROM "trackers" WHERE "trackers"."id" = 1 LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowPermission') AND "workflows"."tracker_id" = 1 AND "workflows"."old_status_id" = 2 AND "workflows"."role_id" IN (1, 2, 3, 4, 5)
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+  CACHE (0.0ms)  SELECT "projects".* FROM "projects" WHERE (projects.status = 1 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowPermission') AND "workflows"."tracker_id" = 1 AND "workflows"."old_status_id" = 2 AND "workflows"."role_id" IN (1, 2, 3, 4, 5)
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+   (0.2ms)  begin transaction
+  IssuePriority Load (0.4ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 3 ORDER BY enumerations.position ASC LIMIT 1
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'issue_done_ratio' LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowPermission') AND "workflows"."tracker_id" = 1 AND "workflows"."old_status_id" = 2 AND "workflows"."role_id" IN (1, 2, 3, 4, 5)
+   (34.3ms)  UPDATE "issues" SET "updated_on" = '2013-07-11 23:48:59.311744', "lock_version" = 2 WHERE ("issues"."id" = 1 AND "issues"."lock_version" = 1)
+  IssueCustomField Load (0.3ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_trackers" ON "custom_fields"."id" = "custom_fields_trackers"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_trackers"."tracker_id" = 1
+  SQL (0.3ms)  SELECT "custom_values"."id" AS t0_r0, "custom_values"."customized_type" AS t0_r1, "custom_values"."customized_id" AS t0_r2, "custom_values"."custom_field_id" AS t0_r3, "custom_values"."value" AS t0_r4, "custom_fields"."id" AS t1_r0, "custom_fields"."type" AS t1_r1, "custom_fields"."name" AS t1_r2, "custom_fields"."field_format" AS t1_r3, "custom_fields"."possible_values" AS t1_r4, "custom_fields"."regexp" AS t1_r5, "custom_fields"."min_length" AS t1_r6, "custom_fields"."max_length" AS t1_r7, "custom_fields"."is_required" AS t1_r8, "custom_fields"."is_for_all" AS t1_r9, "custom_fields"."is_filter" AS t1_r10, "custom_fields"."position" AS t1_r11, "custom_fields"."searchable" AS t1_r12, "custom_fields"."default_value" AS t1_r13, "custom_fields"."editable" AS t1_r14, "custom_fields"."visible" AS t1_r15, "custom_fields"."multiple" AS t1_r16 FROM "custom_values" LEFT OUTER JOIN "custom_fields" ON "custom_fields"."id" = "custom_values"."custom_field_id" WHERE "custom_values"."customized_id" = 1 AND "custom_values"."customized_type" = 'Issue' ORDER BY custom_fields.position
+   (0.1ms)  SELECT MAX("issues"."rgt") AS max_id FROM "issues" WHERE "issues"."root_id" = 1
+  SQL (0.2ms)  UPDATE "issues" SET root_id = 1, lft = lft + 2, rgt = rgt + 2 WHERE (root_id = 1 AND lft >= 3 AND rgt <= 4 )
+  Issue Load (0.1ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = ? LIMIT 1  [["id", 1]]
+  Issue Load (0.2ms)  SELECT "issues".* FROM "issues" WHERE "issues"."root_id" = 1 AND ("issues"."lft" >= 5 AND "issues"."rgt" <= 6) ORDER BY "issues"."lft"
+  IssueRelation Load (0.1ms)  SELECT "issue_relations".* FROM "issue_relations" WHERE "issue_relations"."issue_from_id" = 1
+  IssueRelation Load (0.1ms)  SELECT "issue_relations".* FROM "issue_relations" WHERE "issue_relations"."issue_to_id" = 1
+  Project Load (0.1ms)  SELECT "projects".* FROM "projects" WHERE "projects"."id" = 1 LIMIT 1
+  Tracker Load (0.1ms)  SELECT "trackers".* FROM "trackers" WHERE "trackers"."id" = 1 LIMIT 1
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields"."is_for_all" = 't' ORDER BY position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_projects" ON "custom_fields"."id" = "custom_fields_projects"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_projects"."project_id" = 1 ORDER BY custom_fields.position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_trackers" ON "custom_fields"."id" = "custom_fields_trackers"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_trackers"."tracker_id" = 1
+  SQL (0.5ms)  INSERT INTO "journals" ("created_on", "journalized_id", "journalized_type", "notes", "private_notes", "user_id") VALUES (?, ?, ?, ?, ?, ?)  [["created_on", Thu, 11 Jul 2013 14:48:59 UTC +00:00], ["journalized_id", 1], ["journalized_type", "Issue"], ["notes", "更新！"], ["private_notes", false], ["user_id", 1]]
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'notified_events' LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'default_language' LIMIT 1
+  Issue Load (0.1ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = ? LIMIT 1  [["id", 1]]
+  Project Load (0.1ms)  SELECT "projects".* FROM "projects" WHERE "projects"."id" = 1 LIMIT 1
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."id" = 1 LIMIT 1
+  SQL (0.4ms)  SELECT "members"."id" AS t0_r0, "members"."user_id" AS t0_r1, "members"."project_id" AS t0_r2, "members"."created_on" AS t0_r3, "members"."mail_notification" AS t0_r4, "users"."id" AS t1_r0, "users"."login" AS t1_r1, "users"."hashed_password" AS t1_r2, "users"."firstname" AS t1_r3, "users"."lastname" AS t1_r4, "users"."mail" AS t1_r5, "users"."admin" AS t1_r6, "users"."status" AS t1_r7, "users"."last_login_on" AS t1_r8, "users"."language" AS t1_r9, "users"."auth_source_id" AS t1_r10, "users"."created_on" AS t1_r11, "users"."updated_on" AS t1_r12, "users"."type" AS t1_r13, "users"."identity_url" AS t1_r14, "users"."mail_notification" AS t1_r15, "users"."salt" AS t1_r16, "roles"."id" AS t2_r0, "roles"."name" AS t2_r1, "roles"."position" AS t2_r2, "roles"."assignable" AS t2_r3, "roles"."builtin" AS t2_r4, "roles"."permissions" AS t2_r5, "roles"."issues_visibility" AS t2_r6 FROM "members" LEFT OUTER JOIN "users" ON "users"."id" = "members"."user_id" LEFT OUTER JOIN "member_roles" ON "member_roles"."member_id" = "members"."id" LEFT OUTER JOIN "roles" ON "roles"."id" = "member_roles"."role_id" WHERE "members"."project_id" = 1 AND (users.type='User' AND users.status=1)
+  EnabledModule Load (0.2ms)  SELECT name FROM "enabled_modules" WHERE "enabled_modules"."project_id" = 1
+  User Load (0.2ms)  SELECT "users".* FROM "users" INNER JOIN "watchers" ON "users"."id" = "watchers"."user_id" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "watchers"."watchable_id" = 1 AND "watchers"."watchable_type" = 'Issue' AND "users"."status" = 1
+  Tracker Load (0.1ms)  SELECT "trackers".* FROM "trackers" WHERE "trackers"."id" = 1 LIMIT 1
+  JournalDetail Load (0.1ms)  SELECT "journal_details".* FROM "journal_details" WHERE "journal_details"."journal_id" = 2
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'host_name' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'protocol' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'app_title' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'mail_from' LIMIT 1
+  UserPreference Load (0.1ms)  SELECT "user_preferences".* FROM "user_preferences" WHERE "user_preferences"."user_id" = 1 LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'bcc_recipients' LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'user_format' LIMIT 1
+  IssueStatus Load (0.2ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  IssuePriority Load (0.2ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 3 ORDER BY enumerations.position ASC LIMIT 1
+  IssueCustomField Load (0.1ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields"."is_for_all" = 't' ORDER BY position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_projects" ON "custom_fields"."id" = "custom_fields_projects"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_projects"."project_id" = 1 ORDER BY custom_fields.position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_trackers" ON "custom_fields"."id" = "custom_fields_trackers"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_trackers"."tracker_id" = 1
+  Rendered mailer/_issue.text.erb (9.8ms)
+  Rendered mailer/issue_edit.text.erb within layouts/mailer (14.9ms)
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'emails_header' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'emails_footer' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'plain_text_mail' LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'text_formatting' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'cache_formatted_text' LIMIT 1
+  Attachment Load (0.2ms)  SELECT "attachments".* FROM "attachments" WHERE "attachments"."container_id" = 1 AND "attachments"."container_type" = 'Issue' ORDER BY attachments.created_on ASC, attachments.id ASC
+  Rendered mailer/_issue.html.erb (2.8ms)
+  Rendered mailer/issue_edit.html.erb within layouts/mailer (30.7ms)
+
+Sent email "[プラグイン作り隊 for Development - バグ #1] wawaw" (10ms)
+  bcc: admin@example.net
+Date: Thu, 11 Jul 2013 23:48:59 +0900
+From: redmine@example.net
+Message-ID: <redmine.journal-2.20130711144859@example.net>
+References: <redmine.issue-1.20130710134712@example.net>
+Subject: =?UTF-8?Q?[=E3=83=97=E3=83=A9=E3=82=B0=E3=82=A4=E3=83=B3=E4=BD=9C=E3=82=8A=E9=9A=8A?=
+ =?UTF-8?Q?_for_Development_-_=E3=83=90=E3=82=B0_#1]_wawaw?=
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_51dec5dbbd93c_493b3fb36e0c741423628";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Redmine-Project: for-development
+X-Redmine-Issue-Id: 1
+X-Redmine-Issue-Author: admin
+X-Redmine-Sender: admin
+X-Mailer: Redmine
+X-Redmine-Host: localhost:3000
+X-Redmine-Site: Redmine
+X-Auto-Response-Suppress: OOF
+Auto-Submitted: auto-generated
+List-Id: <redmine.example.net>
+
+
+----==_mimepart_51dec5dbbd93c_493b3fb36e0c741423628
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+Issue #1 has been updated by Redmine Admin.
+
+
+=E6=9B=B4=E6=96=B0=EF=BC=81
+
+----------------------------------------
+=E3=83=90=E3=82=B0 #1: wawaw
+http://localhost:3000/issues/1#change-2
+
+* Author: Redmine Admin
+* Status: =E9=80=B2=E8=A1=8C=E4=B8=AD
+* Priority: =E9=AB=98=E3=82=81
+* Assignee: =
+
+* Category: =
+
+* Target version: =
+
+----------------------------------------
+wawaw
+
+
+-- =
+
+You have received this notification because you have either subscribed to=
+ it, or are involved in it.
+To change your notification preferences, please click here: http://hostna=
+me/my/account
+
+----==_mimepart_51dec5dbbd93c_493b3fb36e0c741423628
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 0.8em;
+  color:#484848;
+}
+h1, h2, h3 { font-family: "Trebuchet MS", Verdana, sans-serif; margin: 0p=
+x; }
+h1 { font-size: 1.2em; }
+h2, h3 { font-size: 1.1em; }
+a, a:link, a:visited { color: #2A5685;}
+a:hover, a:active { color: #c61a1a; }
+a.wiki-anchor { display: none; }
+hr {
+  width: 100%;
+  height: 1px;
+  background: #ccc;
+  border: 0;
+}
+.footer {
+  font-size: 0.8em;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+<span class=3D"header"></span>
+Issue #1 has been updated by Redmine Admin.
+
+<ul>
+</ul>
+
+<p>=E6=9B=B4=E6=96=B0=EF=BC=81</p>
+<hr />
+<h1><a href=3D"http://localhost:3000/issues/1#change-2">=E3=83=90=E3=82=B0=
+ #1: wawaw</a></h1>
+
+<ul>
+<li>Author: Redmine Admin</li>
+<li>Status: =E9=80=B2=E8=A1=8C=E4=B8=AD</li>
+<li>Priority: =E9=AB=98=E3=82=81</li>
+<li>Assignee: </li>
+<li>Category: </li>
+<li>Target version: </li>
+</ul>
+
+<p>wawaw</p>
+
+
+<hr />
+<span class=3D"footer"><p>You have received this notification because you=
+ have either subscribed to it, or are involved in it.<br />To change your=
+ notification preferences, please click here: <a class=3D"external" href=3D=
+"http://hostname/my/account">http://hostname/my/account</a></p></span>
+</body>
+</html>
+
+----==_mimepart_51dec5dbbd93c_493b3fb36e0c741423628--
+
+   (5.6ms)  commit transaction
+Redirected to http://219.94.249.150:3000/issues/1
+Completed 302 Found in 2007ms (ActiveRecord: 66.2ms)
+
+
+Started GET "/issues/1" for 223.135.96.2 at 2013-07-11 23:48:59 +0900
+Processing by IssuesController#show as HTML
+  Parameters: {"id"=>"1"}
+   (0.3ms)  SELECT MAX("settings"."updated_on") AS max_id FROM "settings" 
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."status" = 1 AND "users"."id" = ? LIMIT 1  [["id", 1]]
+  Current user: admin (id=1)
+  Issue Load (0.2ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = ? LIMIT 1  [["id", "1"]]
+  Project Load (0.3ms)  SELECT "projects".* FROM "projects" WHERE "projects"."id" = 1 LIMIT 1
+  EnabledModule Load (0.2ms)  SELECT name FROM "enabled_modules" WHERE "enabled_modules"."project_id" = 1
+  Journal Load (0.2ms)  SELECT "journals".* FROM "journals" WHERE "journals"."journalized_id" = 1 AND "journals"."journalized_type" = 'Issue' ORDER BY journals.id ASC
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."id" IN (1)
+  JournalDetail Load (0.2ms)  SELECT "journal_details".* FROM "journal_details" WHERE "journal_details"."journal_id" IN (1, 2)
+  UserPreference Load (0.3ms)  SELECT "user_preferences".* FROM "user_preferences" WHERE "user_preferences"."user_id" = 1 LIMIT 1
+  SQL (10.4ms)  SELECT "changesets"."id" AS t0_r0, "changesets"."repository_id" AS t0_r1, "changesets"."revision" AS t0_r2, "changesets"."committer" AS t0_r3, "changesets"."committed_on" AS t0_r4, "changesets"."comments" AS t0_r5, "changesets"."commit_date" AS t0_r6, "changesets"."scmid" AS t0_r7, "changesets"."user_id" AS t0_r8, "repositories"."id" AS t1_r0, "repositories"."project_id" AS t1_r1, "repositories"."url" AS t1_r2, "repositories"."login" AS t1_r3, "repositories"."password" AS t1_r4, "repositories"."root_url" AS t1_r5, "repositories"."type" AS t1_r6, "repositories"."path_encoding" AS t1_r7, "repositories"."log_encoding" AS t1_r8, "repositories"."extra_info" AS t1_r9, "repositories"."identifier" AS t1_r10, "repositories"."is_default" AS t1_r11, "projects"."id" AS t2_r0, "projects"."name" AS t2_r1, "projects"."description" AS t2_r2, "projects"."homepage" AS t2_r3, "projects"."is_public" AS t2_r4, "projects"."parent_id" AS t2_r5, "projects"."created_on" AS t2_r6, "projects"."updated_on" AS t2_r7, "projects"."identifier" AS t2_r8, "projects"."status" AS t2_r9, "projects"."lft" AS t2_r10, "projects"."rgt" AS t2_r11, "projects"."inherit_members" AS t2_r12 FROM "changesets" LEFT OUTER JOIN "repositories" ON "repositories"."id" = "changesets"."repository_id" LEFT OUTER JOIN "projects" ON "projects"."id" = "repositories"."project_id" INNER JOIN "changesets_issues" ON "changesets"."id" = "changesets_issues"."changeset_id" WHERE "changesets_issues"."issue_id" = 1 AND (projects.status <> 9 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='repository')) ORDER BY changesets.committed_on ASC, changesets.id ASC
+  IssueRelation Load (0.3ms)  SELECT "issue_relations".* FROM "issue_relations" WHERE "issue_relations"."issue_from_id" = 1
+  IssueRelation Load (0.1ms)  SELECT "issue_relations".* FROM "issue_relations" WHERE "issue_relations"."issue_to_id" = 1
+  IssueStatus Load (0.2ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  Role Load (0.3ms)  SELECT "roles".* FROM "roles" 
+  Tracker Load (0.2ms)  SELECT "trackers".* FROM "trackers" WHERE "trackers"."id" = 1 LIMIT 1
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "users"."id" = 1 LIMIT 1
+  WorkflowTransition Load (0.6ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  IssueStatus Load (0.3ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+  TimeEntryActivity Load (0.4ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('TimeEntryActivity') AND "enumerations"."is_default" = 't' ORDER BY enumerations.position ASC LIMIT 1
+  CACHE (0.0ms)  SELECT "projects".* FROM "projects" WHERE "projects"."id" = 1 LIMIT 1
+  IssueCustomField Load (0.4ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields"."is_for_all" = 't' ORDER BY position
+  IssueCustomField Load (0.2ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_projects" ON "custom_fields"."id" = "custom_fields_projects"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_projects"."project_id" = 1 ORDER BY custom_fields.position
+  CACHE (0.0ms)  SELECT name FROM "enabled_modules" WHERE "enabled_modules"."project_id" = 1
+  Tracker Load (0.4ms)  SELECT DISTINCT trackers.* FROM "trackers" INNER JOIN "projects_trackers" ON "projects_trackers"."tracker_id" = "trackers"."id" INNER JOIN "projects" ON "projects"."id" = "projects_trackers"."project_id" JOIN enabled_modules ON enabled_modules.project_id = projects.id AND enabled_modules.name = 'issue_tracking' WHERE (projects.lft >= 3 AND projects.rgt <= 4 AND projects.status <> 9) ORDER BY trackers.position ASC
+  Principal Load (0.3ms)  SELECT "users".* FROM "users" INNER JOIN "members" ON "users"."id" = "members"."user_id" WHERE "members"."project_id" = 1 AND (users.type='Group' OR (users.type='User' AND users.status=1))
+  SQL (0.3ms)  SELECT "versions"."id" AS t0_r0, "versions"."project_id" AS t0_r1, "versions"."name" AS t0_r2, "versions"."description" AS t0_r3, "versions"."effective_date" AS t0_r4, "versions"."created_on" AS t0_r5, "versions"."updated_on" AS t0_r6, "versions"."wiki_page_title" AS t0_r7, "versions"."status" AS t0_r8, "versions"."sharing" AS t0_r9, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12 FROM "versions" LEFT OUTER JOIN "projects" ON "projects"."id" = "versions"."project_id" WHERE (projects.id = 1 OR (projects.status <> 9 AND ( versions.sharing = 'system' OR (projects.lft >= 3 AND projects.rgt <= 4 AND versions.sharing = 'tree') OR (projects.lft < 3 AND projects.rgt > 4 AND versions.sharing IN ('hierarchy', 'descendants')) OR (projects.lft > 3 AND projects.rgt < 4 AND versions.sharing = 'hierarchy'))))
+  IssueCategory Load (0.2ms)  SELECT "issue_categories".* FROM "issue_categories" WHERE "issue_categories"."project_id" = 1 ORDER BY issue_categories.name
+  IssueStatus Load (0.3ms)  SELECT "issue_statuses".* FROM "issue_statuses" ORDER BY issue_statuses.position ASC
+  IssuePriority Load (0.4ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') ORDER BY enumerations.position ASC
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'issue_group_assignment' LIMIT 1
+Creating scope :sorted. Overwriting existing method Group.sorted.
+  Group Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."type" IN ('Group')
+  Role Load (0.3ms)  SELECT "roles".* FROM "roles" WHERE "roles"."builtin" = 0 ORDER BY roles.position ASC
+  CustomField Load (0.3ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."is_filter" = 't'
+   (0.3ms)  SELECT COUNT(*) FROM "projects" WHERE "projects"."status" = 1 AND ("projects"."lft" >= 3 AND "projects"."rgt" <= 4) AND ("projects".id != 1)
+  SQL (0.7ms)  SELECT issues.id FROM "issues" LEFT OUTER JOIN "projects" ON "projects"."id" = "issues"."project_id" LEFT OUTER JOIN "issue_statuses" ON "issue_statuses"."id" = "issues"."status_id" LEFT OUTER JOIN "users" ON "users"."id" = "issues"."assigned_to_id" LEFT OUTER JOIN "trackers" ON "trackers"."id" = "issues"."tracker_id" LEFT OUTER JOIN "enumerations" ON "enumerations"."id" = "issues"."priority_id" AND "enumerations"."type" IN ('IssuePriority') LEFT OUTER JOIN "issue_categories" ON "issue_categories"."id" = "issues"."category_id" LEFT OUTER JOIN "versions" ON "versions"."id" = "issues"."fixed_version_id" WHERE (projects.status <> 9 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking')) AND ((issues.status_id IN (SELECT id FROM issue_statuses WHERE is_closed='f')) AND projects.id = 1) ORDER BY issues.id DESC LIMIT 501
+   (0.3ms)  SELECT "users".id FROM "users" INNER JOIN "watchers" ON "users"."id" = "watchers"."user_id" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "watchers"."watchable_id" = 1 AND "watchers"."watchable_type" = 'Issue'
+  Rendered issues/_action_menu.html.erb (16.0ms)
+  IssuePriority Load (0.3ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 3 ORDER BY enumerations.position ASC LIMIT 1
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'gravatar_enabled' LIMIT 1
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'time_format' LIMIT 1
+  Setting Load (0.1ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'date_format' LIMIT 1
+  CACHE (0.0ms)  SELECT "custom_fields".* FROM "custom_fields" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields"."is_for_all" = 't' ORDER BY position
+  CACHE (0.0ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_projects" ON "custom_fields"."id" = "custom_fields_projects"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_projects"."project_id" = 1 ORDER BY custom_fields.position
+  IssueCustomField Load (0.3ms)  SELECT "custom_fields".* FROM "custom_fields" INNER JOIN "custom_fields_trackers" ON "custom_fields"."id" = "custom_fields_trackers"."custom_field_id" WHERE "custom_fields"."type" IN ('IssueCustomField') AND "custom_fields_trackers"."tracker_id" = 1
+  Attachment Load (0.3ms)  SELECT "attachments".* FROM "attachments" WHERE "attachments"."container_id" = 1 AND "attachments"."container_type" = 'Issue' ORDER BY attachments.created_on ASC, attachments.id ASC
+  Setting Load (0.2ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'cross_project_issue_relations' LIMIT 1
+  Rendered issue_relations/_form.html.erb (6.5ms)
+  Rendered issues/_relations.html.erb (32.9ms)
+  SQL (0.7ms)  SELECT "issues"."id" AS t0_r0, "issues"."tracker_id" AS t0_r1, "issues"."project_id" AS t0_r2, "issues"."subject" AS t0_r3, "issues"."description" AS t0_r4, "issues"."due_date" AS t0_r5, "issues"."category_id" AS t0_r6, "issues"."status_id" AS t0_r7, "issues"."assigned_to_id" AS t0_r8, "issues"."priority_id" AS t0_r9, "issues"."fixed_version_id" AS t0_r10, "issues"."author_id" AS t0_r11, "issues"."lock_version" AS t0_r12, "issues"."created_on" AS t0_r13, "issues"."updated_on" AS t0_r14, "issues"."start_date" AS t0_r15, "issues"."done_ratio" AS t0_r16, "issues"."estimated_hours" AS t0_r17, "issues"."parent_id" AS t0_r18, "issues"."root_id" AS t0_r19, "issues"."lft" AS t0_r20, "issues"."rgt" AS t0_r21, "issues"."is_private" AS t0_r22, "issues"."closed_on" AS t0_r23, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12, "issue_statuses"."id" AS t2_r0, "issue_statuses"."name" AS t2_r1, "issue_statuses"."is_closed" AS t2_r2, "issue_statuses"."is_default" AS t2_r3, "issue_statuses"."position" AS t2_r4, "issue_statuses"."default_done_ratio" AS t2_r5 FROM "issues" LEFT OUTER JOIN "projects" ON "projects"."id" = "issues"."project_id" LEFT OUTER JOIN "issue_statuses" ON "issue_statuses"."id" = "issues"."status_id" WHERE "issues"."id" = 1 AND (projects.status <> 9 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking')) LIMIT 1
+  CACHE (0.0ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 3 ORDER BY enumerations.position ASC LIMIT 1
+  SQL (0.6ms)  SELECT "issues"."id" AS t0_r0, "issues"."tracker_id" AS t0_r1, "issues"."project_id" AS t0_r2, "issues"."subject" AS t0_r3, "issues"."description" AS t0_r4, "issues"."due_date" AS t0_r5, "issues"."category_id" AS t0_r6, "issues"."status_id" AS t0_r7, "issues"."assigned_to_id" AS t0_r8, "issues"."priority_id" AS t0_r9, "issues"."fixed_version_id" AS t0_r10, "issues"."author_id" AS t0_r11, "issues"."lock_version" AS t0_r12, "issues"."created_on" AS t0_r13, "issues"."updated_on" AS t0_r14, "issues"."start_date" AS t0_r15, "issues"."done_ratio" AS t0_r16, "issues"."estimated_hours" AS t0_r17, "issues"."parent_id" AS t0_r18, "issues"."root_id" AS t0_r19, "issues"."lft" AS t0_r20, "issues"."rgt" AS t0_r21, "issues"."is_private" AS t0_r22, "issues"."closed_on" AS t0_r23, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12, "issue_statuses"."id" AS t2_r0, "issue_statuses"."name" AS t2_r1, "issue_statuses"."is_closed" AS t2_r2, "issue_statuses"."is_default" AS t2_r3, "issue_statuses"."position" AS t2_r4, "issue_statuses"."default_done_ratio" AS t2_r5 FROM "issues" LEFT OUTER JOIN "projects" ON "projects"."id" = "issues"."project_id" LEFT OUTER JOIN "issue_statuses" ON "issue_statuses"."id" = "issues"."status_id" WHERE "issues"."id" = 2 AND (projects.status <> 9 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking')) LIMIT 1
+  IssuePriority Load (0.3ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 2 ORDER BY enumerations.position ASC LIMIT 1
+  Rendered issues/_changesets.html.erb (25.5ms)
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  IssueStatus Load (0.3ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 1 LIMIT 1
+  CACHE (0.0ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 3 ORDER BY enumerations.position ASC LIMIT 1
+  CACHE (0.0ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."id" = 2 ORDER BY enumerations.position ASC LIMIT 1
+  Setting Load (0.3ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'ui_theme' LIMIT 1
+  Issue Load (0.4ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = 1 LIMIT 1
+  CACHE (0.0ms)  SELECT "attachments".* FROM "attachments" WHERE "attachments"."container_id" = 1 AND "attachments"."container_type" = 'Issue' ORDER BY attachments.created_on ASC, attachments.id ASC
+  CACHE (0.0ms)  SELECT "issues".* FROM "issues" WHERE "issues"."id" = 1 LIMIT 1
+  CACHE (0.0ms)  SELECT "attachments".* FROM "attachments" WHERE "attachments"."container_id" = 1 AND "attachments"."container_type" = 'Issue' ORDER BY attachments.created_on ASC, attachments.id ASC
+  Rendered issues/_history.html.erb (52.8ms)
+  CACHE (0.0ms)  SELECT "users".id FROM "users" INNER JOIN "watchers" ON "users"."id" = "watchers"."user_id" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "watchers"."watchable_id" = 1 AND "watchers"."watchable_type" = 'Issue'
+  Rendered issues/_action_menu.html.erb (8.5ms)
+  Project Load (0.8ms)  SELECT "projects".* FROM "projects" WHERE (projects.status = 1 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" = 2 LIMIT 1
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  CACHE (0.0ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowTransition') AND "workflows"."old_status_id" = 2 AND (role_id IN (1,2,3,4,5) AND tracker_id = 1 AND ((author = 'f' AND assignee = 'f') OR author = 't'))
+  CACHE (0.0ms)  SELECT "issue_statuses".* FROM "issue_statuses" WHERE "issue_statuses"."id" IN (1, 3, 4, 5, 6)
+  CACHE (0.0ms)  SELECT "roles".* FROM "roles" 
+  WorkflowPermission Load (0.6ms)  SELECT "workflows".* FROM "workflows" WHERE "workflows"."type" IN ('WorkflowPermission') AND "workflows"."tracker_id" = 1 AND "workflows"."old_status_id" = 2 AND "workflows"."role_id" IN (1, 2, 3, 4, 5)
+  CACHE (0.0ms)  SELECT "projects".* FROM "projects" WHERE (projects.status = 1 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))
+  Tracker Load (0.4ms)  SELECT "trackers".* FROM "trackers" INNER JOIN "projects_trackers" ON "trackers"."id" = "projects_trackers"."tracker_id" WHERE "projects_trackers"."project_id" = 1 ORDER BY trackers.position
+  IssuePriority Load (0.5ms)  SELECT "enumerations".* FROM "enumerations" WHERE "enumerations"."type" IN ('IssuePriority') AND "enumerations"."active" = 't' ORDER BY enumerations.position ASC
+  SQL (0.6ms)  SELECT "members"."id" AS t0_r0, "members"."user_id" AS t0_r1, "members"."project_id" AS t0_r2, "members"."created_on" AS t0_r3, "members"."mail_notification" AS t0_r4, "users"."id" AS t1_r0, "users"."login" AS t1_r1, "users"."hashed_password" AS t1_r2, "users"."firstname" AS t1_r3, "users"."lastname" AS t1_r4, "users"."mail" AS t1_r5, "users"."admin" AS t1_r6, "users"."status" AS t1_r7, "users"."last_login_on" AS t1_r8, "users"."language" AS t1_r9, "users"."auth_source_id" AS t1_r10, "users"."created_on" AS t1_r11, "users"."updated_on" AS t1_r12, "users"."type" AS t1_r13, "users"."identity_url" AS t1_r14, "users"."mail_notification" AS t1_r15, "users"."salt" AS t1_r16, "roles"."id" AS t2_r0, "roles"."name" AS t2_r1, "roles"."position" AS t2_r2, "roles"."assignable" AS t2_r3, "roles"."builtin" AS t2_r4, "roles"."permissions" AS t2_r5, "roles"."issues_visibility" AS t2_r6 FROM "members" LEFT OUTER JOIN "users" ON "users"."id" = "members"."user_id" LEFT OUTER JOIN "member_roles" ON "member_roles"."member_id" = "members"."id" LEFT OUTER JOIN "roles" ON "roles"."id" = "member_roles"."role_id" WHERE "members"."project_id" = 1 AND (users.type='User' AND users.status=1)
+   (0.2ms)  SELECT COUNT(*) FROM "issue_categories" WHERE "issue_categories"."project_id" = 1
+  SQL (0.5ms)  SELECT "versions"."id" AS t0_r0, "versions"."project_id" AS t0_r1, "versions"."name" AS t0_r2, "versions"."description" AS t0_r3, "versions"."effective_date" AS t0_r4, "versions"."created_on" AS t0_r5, "versions"."updated_on" AS t0_r6, "versions"."wiki_page_title" AS t0_r7, "versions"."status" AS t0_r8, "versions"."sharing" AS t0_r9, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12 FROM "versions" LEFT OUTER JOIN "projects" ON "projects"."id" = "versions"."project_id" WHERE "versions"."status" = 'open' AND (projects.id = 1 OR (projects.status <> 9 AND ( versions.sharing = 'system' OR (projects.lft >= 3 AND projects.rgt <= 4 AND versions.sharing = 'tree') OR (projects.lft < 3 AND projects.rgt > 4 AND versions.sharing IN ('hierarchy', 'descendants')) OR (projects.lft > 3 AND projects.rgt < 4 AND versions.sharing = 'hierarchy'))))
+  Setting Load (0.3ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'start_of_week' LIMIT 1
+  Rendered issues/_form_custom_fields.html.erb (0.1ms)
+  Rendered issues/_attributes.html.erb (37.9ms)
+  Rendered issues/_form.html.erb (98.2ms)
+  Setting Load (0.3ms)  SELECT "settings".* FROM "settings" WHERE "settings"."name" = 'attachment_max_size' LIMIT 1
+  Rendered attachments/_form.html.erb (28.8ms)
+   (0.3ms)  SELECT MAX("journals"."id") AS max_id FROM "journals" WHERE "journals"."journalized_id" = 1 AND "journals"."journalized_type" = 'Issue'
+  Rendered issues/_edit.html.erb (163.2ms)
+  Token Load (0.6ms)  SELECT "tokens".* FROM "tokens" WHERE "tokens"."user_id" = 1 AND (action='feeds') LIMIT 1
+  SQL (0.5ms)  SELECT "queries"."id" AS t0_r0, "queries"."project_id" AS t0_r1, "queries"."name" AS t0_r2, "queries"."filters" AS t0_r3, "queries"."user_id" AS t0_r4, "queries"."is_public" AS t0_r5, "queries"."column_names" AS t0_r6, "queries"."sort_criteria" AS t0_r7, "queries"."group_by" AS t0_r8, "queries"."type" AS t0_r9, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12 FROM "queries" LEFT OUTER JOIN "projects" ON "projects"."id" = "queries"."project_id" WHERE "queries"."type" IN ('IssueQuery') AND ((queries.project_id IS NULL OR (projects.status <> 9 AND projects.id IN (SELECT em.project_id FROM enabled_modules em WHERE em.name='issue_tracking'))) AND (queries.is_public = 't' OR queries.user_id = 1)) AND (project_id IS NULL OR project_id = 1) ORDER BY queries.name ASC
+  Rendered issues/_sidebar.html.erb (7.8ms)
+   (0.3ms)  SELECT COUNT(*) FROM "users" INNER JOIN "watchers" ON "users"."id" = "watchers"."user_id" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "watchers"."watchable_id" = 1 AND "watchers"."watchable_type" = 'Issue'
+  User Load (0.3ms)  SELECT "users".* FROM "users" INNER JOIN "watchers" ON "users"."id" = "watchers"."user_id" WHERE "users"."type" IN ('User', 'AnonymousUser') AND "watchers"."watchable_id" = 1 AND "watchers"."watchable_type" = 'Issue'
+  Rendered watchers/_watchers.html.erb (7.5ms)
+  Rendered issues/show.html.erb within layouts/base (600.2ms)
+  SQL (0.8ms)  SELECT "members"."id" AS t0_r0, "members"."user_id" AS t0_r1, "members"."project_id" AS t0_r2, "members"."created_on" AS t0_r3, "members"."mail_notification" AS t0_r4, "projects"."id" AS t1_r0, "projects"."name" AS t1_r1, "projects"."description" AS t1_r2, "projects"."homepage" AS t1_r3, "projects"."is_public" AS t1_r4, "projects"."parent_id" AS t1_r5, "projects"."created_on" AS t1_r6, "projects"."updated_on" AS t1_r7, "projects"."identifier" AS t1_r8, "projects"."status" AS t1_r9, "projects"."lft" AS t1_r10, "projects"."rgt" AS t1_r11, "projects"."inherit_members" AS t1_r12, "roles"."id" AS t2_r0, "roles"."name" AS t2_r1, "roles"."position" AS t2_r2, "roles"."assignable" AS t2_r3, "roles"."builtin" AS t2_r4, "roles"."permissions" AS t2_r5, "roles"."issues_visibility" AS t2_r6 FROM "members" LEFT OUTER JOIN "projects" ON "projects"."id" = "members"."project_id" LEFT OUTER JOIN "member_roles" ON "member_roles"."member_id" = "members"."id" LEFT OUTER JOIN "roles" ON "roles"."id" = "member_roles"."role_id" WHERE "members"."user_id" = 1 AND (projects.status<>9) ORDER BY projects.name
+   (0.4ms)  SELECT COUNT(DISTINCT "versions"."id") FROM "versions" LEFT OUTER JOIN "projects" ON "projects"."id" = "versions"."project_id" WHERE (projects.id = 1 OR (projects.status <> 9 AND ( versions.sharing = 'system' OR (projects.lft >= 3 AND projects.rgt <= 4 AND versions.sharing = 'tree') OR (projects.lft < 3 AND projects.rgt > 4 AND versions.sharing IN ('hierarchy', 'descendants')) OR (projects.lft > 3 AND projects.rgt < 4 AND versions.sharing = 'hierarchy'))))
+  Repository Load (0.6ms)  SELECT "repositories".* FROM "repositories" WHERE "repositories"."project_id" = 1 AND (is_default = 't') LIMIT 1
+Completed 200 OK in 1210ms (Views: 666.5ms | ActiveRecord: 36.5ms)
+
