@@ -1,5 +1,6 @@
 <h2>show log</h2>
-
-<%= @log %>
-
-add ticket
+<% if @nothing %>
+  <p><%= @nothing %></p>
+<% else %>
+  <pre><%= @log %></pre>
+<% end %>
