@@ -1,6 +1,6 @@
 <h2>show log</h2>
-<% if @nothing %>
-  <p><%= @nothing %></p>
+<% if @error_message %>
+  <p><%= @error_message %></p>
 <% else %>
   <pre><%= @log %></pre>
 <% end %>
