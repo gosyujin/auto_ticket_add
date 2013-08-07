@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'nokogiri'
 require 'pp'
+require 'open-uri'
 
 class AutoTicketController < ApplicationController
   unloadable
@@ -52,21 +53,30 @@ private
        # ONLY default scm exec
        next unless repository["is_default"]
 
-       case repository["type"]
+       scm_type = repository["type"]
+       case scm_type
        when Repository::Subversion.to_s
-         if params["revision"].nil? or params["revision"] == "" then
-           revision = "--limit 1"
+         # case param["xxx"].to_i when NOT a number return 0
+         from = params["from"].to_i.to_s
+         to = params["to"].to_i.to_s
+
+         if from != "0" or to != "0" then
+           since = ""
+           since << from.to_s unless from == "0"
+           since << ":"       unless from == "0"
+           since << to.to_s   unless to == "0"
+           revision_opt = "-r #{since}"
          else
-           revision = "-r #{params["revision"]}"
+           revision_opt = "--limit 5"
          end
 
-         log = `svn log --xml #{repository.url} #{revision}`
-         @log = parse(:svn, log)
+         @repository_url = repository.url
+         log = `svn log -v --xml #{@repository_url} #{revision_opt}`
+         @log = parse(scm_type, log)
          return
        when Repository::Git.to_s
-
-         log = `git --git-dir=#{repository.url} log --pretty=format:"%h#{Git_Splitter}%s"`
-         @log = parse(:git, log)
+         log = `git --git-dir=#{@repository_url} log --pretty=format:"%h#{Git_Splitter}%s"`
+         @log = parse(scm_type, log)
          return
        else
          @error_message = "It have support only Subversion"
@@ -78,20 +88,29 @@ private
   def parse(scm, log)
     hash = {}
     case scm
-    when :svn
+    when Repository::Subversion.to_s
       doc = Nokogiri::XML(log)
       doc.xpath('/log/logentry').each do |item|
+        msg_text = ""
         item.xpath('./msg').each do |msg|
-          hash[item["revision"]] = msg.text
+          msg_text = msg.text
         end
+
+        path_array = []
+        item.xpath('paths/path').each do |path|
+            path_array << path.text
+        end
+        hash[item["revision"]] = { "msg" => msg_text, "path" => path_array }
       end
-    when :git
+    when Repository::Git.to_s
       log.split("\n").each do |lo|
         k,v = lo.split(Git_Splitter)
         hash[k] = v
       end
     end
     return hash
+  rescue ex
+    puts ex
   end
 
   def find_project

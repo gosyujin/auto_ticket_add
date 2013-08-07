@@ -1,6 +1,29 @@
-<h2>show log</h2>
+<h2>Commit log and change files from <%= @repository_url %></h2>
 <% if @error_message %>
   <p><%= @error_message %></p>
 <% else %>
-  <pre><%= @log %></pre>
+  <div>
+    <%= form_tag('./index') do %>
+      from:<%= text_field_tag("from") %>
+      to:<%= text_field_tag("to") %>
+      <%= submit_tag('submit') %>
+    <% end %>
+    / [ticket add]
+  </div>
+  <% @log.each do |log|
+     revision = log[0]
+     commit_log = simple_format(log[1]["msg"])
+     files = log[1]["path"]
+  %>
+
+  <span>----------------------------------------------------------</span>
+  <p>r<%= revision %></p>
+  <%= commit_log %>
+  <ul>
+  <% files.each do |file| %>
+    <li><%= file %></li>
+  <% end %>
+  </ul>
+  <% end %>
+
 <% end %>
