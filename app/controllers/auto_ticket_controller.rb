@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'nokogiri'
 require 'pp'
-require 'open-uri'
+require 'open3'
 
 class AutoTicketController < ApplicationController
   unloadable
@@ -62,18 +62,33 @@ private
 
          if from != "0" or to != "0" then
            since = ""
-           since << from.to_s unless from == "0"
-           since << ":"       unless from == "0"
-           since << to.to_s   unless to == "0"
+           since << from.to_s if from != "0"
+           since << ":"       if from != "0" and to != "0"
+           since << to.to_s   if to   != "0"
            revision_opt = "-r #{since}"
          else
+           # DEFAULT
            revision_opt = "--limit 5"
          end
 
          @repository_url = repository.url
-         log = `svn log -v --xml #{@repository_url} #{revision_opt}`
-         @log = parse(scm_type, log)
-         return
+         command = "svn log -v --xml #{@repository_url} #{revision_opt}"
+         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+           error = stderr.read
+
+           if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/
+             puts "Windows"
+             error = error.encode("utf-8", "windows-31j").encode("utf-8")
+           else
+             puts "not Windows"
+             error = error.encode("utf-8").encode("utf-8")
+           end
+           raise error unless error == ""
+
+           log = stdout.read
+           @log = parse(scm_type, log)
+           return
+         end
        when Repository::Git.to_s
          log = `git --git-dir=#{@repository_url} log --pretty=format:"%h#{Git_Splitter}%s"`
          @log = parse(scm_type, log)
@@ -82,8 +97,10 @@ private
          @error_message = "It have support only Subversion"
          return
        end
-    end
-  end
+     end
+   rescue RuntimeError => ex
+     @error_message = ex
+   end
 
   def parse(scm, log)
     hash = {}
