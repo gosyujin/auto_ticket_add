@@ -1,13 +1,18 @@
-<h2>Commit log and change files list from: <%= @repository_url %></h2>
+<h2>
+  Commit log and change files list from:
+  <%= link_to @repository_identifier, :controller => "auto_ticket", :action => "index" %>
+</h2>
 <%= form_tag('./index') do %>
   from:<%= text_field_tag("from") %>
   to:<%= text_field_tag("to") %>
   <%= submit_tag('submit') %>
 <% end %>
 / [ticket add]
- <% if @error_message %>
+
+<% if @error_message %>
   <p><%= @error_message %></p>
 <% else %>
+  <%= link_to "DL", :controller => "auto_ticket", :action => "download", :from => params["from"], :to => params["to"] %>
   <% @log.each do |log|
      revision = log[0]
      commit_log = simple_format(log[1]["msg"])
@@ -15,7 +20,7 @@
   %>
 
   <hr />
-  <p>r<%= revision %></p>
+  <p>revision <%= revision %>:</p>
   <%= commit_log %>
   <ul>
   <% files.each do |file| %>
