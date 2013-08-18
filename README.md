@@ -1,5 +1,10 @@
 # auto_ticket_add
 
+## 参考
+
+- app/views\repositories/_dir_list_content.html.erb
+- app/controllers/repositories_controller.rb
+
 ## 役割
 
 最新コミットログにチケットナンバー( #1 とか)が入っている場合、該当するチケットの注記にコミットログを差し込んで更新するプラグイン。

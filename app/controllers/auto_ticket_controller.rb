@@ -19,6 +19,8 @@ class AutoTicketController < ApplicationController
 
   def index
     puts "call index"
+    @current_entry_path = params["path"].nil? ? "/" : params["path"]
+    @entries = @repository.entries(@current_entry_path, "HEAD")
     @log = commit_log
   end
 
@@ -44,17 +46,35 @@ class AutoTicketController < ApplicationController
     end
   end
 
+  def show
+    puts "call show"
+    @current_entry_path = params["path"].nil? ? "/" : params["path"]
+    path = File.join(@repository_url, @current_entry_path)
+
+    @log = commit_log(path)
+
+    @entries = @repository.entries(@current_entry_path, "HEAD")
+
+    render :action => "index"
+  end
+
   def download
     puts "call download"
-    json = commit_log
+    @current_entry_path = params["path"].nil? ? "/" : params["path"]
+    path = File.join(@repository_url, @current_entry_path)
+
+    out_filename = "diff.txt"
+    json = commit_log(path)
     plain_txt = log_to_plain(json)
 
-    filename = "diff.txt"
-    send_data plain_txt, :filename => filename, :type => "text/plain", :description => "attachment"
+    send_data plain_txt,
+              :filename => out_filename,
+              :type => "text/plain",
+              :description => "attachment"
   end
 
 private
-  def commit_log
+  def commit_log(url=@repository.url)
     scm_type = @repository["type"]
     case scm_type
     when Repository::Subversion.to_s
@@ -73,7 +93,8 @@ private
         revision_opt = "--limit 5"
       end
 
-      command = "svn log -v --xml #{@repository.url} #{revision_opt}"
+      url = to_win31j(url)
+      command = "svn log -v --xml #{url} #{revision_opt}"
       Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
         error = stderr.read
 
@@ -83,6 +104,7 @@ private
         log = stdout.read
         return parse(scm_type, log)
       end
+=begin
     when Repository::Git.to_s
       # FIXME get log
       from = params["from"].to_s
@@ -99,8 +121,7 @@ private
         revision_opt = "HEAD~6..HEAD"
       end
 
-      command = %{git --git-dir=#{@repository.url} log #{revision_opt} --name-only --pretty=format:"GitHash:%h%nGitSub:%s"}
-      puts command
+      command = %{git --git-dir=#{url} log #{revision_opt} --name-only --pretty=format:"GitHash:%h%nGitSub:%s"}
       Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
         error = stderr.read
 
@@ -110,6 +131,7 @@ private
         log = stdout.read
         return parse(scm_type, log)
       end
+=end
     else
       raise RepositoryNoSupport, "This scm is no support... (#{scm_type})"
     end
@@ -189,6 +211,14 @@ private
     end
   end
 
+  def to_win31j(str)
+    if windows? then
+      str = str.encode("windows-31j", "utf-8").encode("windows-31j")
+    else
+      str = str.encode("utf-8").encode("utf-8")
+    end
+  end
+
   def windows?
     if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/
       puts "windows"
@@ -200,6 +230,7 @@ private
   end
 
   def find_repository
+    puts "call find_repository"
     repositories = @project.repositories
     if repositories.empty? then
       raise RepositoryNotFound, "Repository is nothing..."
@@ -220,6 +251,7 @@ private
   end
 
   def find_project
+    puts "call find_project"
     @project = Project.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404

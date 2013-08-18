@@ -1,10 +1,8 @@
-<h2>
-  Commit log and change files list from:
-  <%= link_to @repository_identifier, :controller => "auto_ticket", :action => "index" %>
-</h2>
-<%= form_tag('./index') do %>
+<h2><%= link_to @repository_identifier, :action => "index" %></h2>
+<%= form_tag('./show') do %>
   from:<%= text_field_tag("from") %>
   to:<%= text_field_tag("to") %>
+  <%= hidden_field_tag("path", to_path_param(@current_entry_path)) %>
   <%= submit_tag('submit') %>
 <% end %>
 / [ticket add]
@@ -12,21 +10,61 @@
 <% if @error_message %>
   <p><%= @error_message %></p>
 <% else %>
-  <%= link_to "DL", :controller => "auto_ticket", :action => "download", :from => params["from"], :to => params["to"] %>
+
+  <div class="autoscroll">
+  <% if @entries.nil? then %>
+    <p>no table ...</p>
+  <% else %>
+    <table id="browser" class="list entries">
+      <thead>
+        <tr id="root">
+          <th>Name</th>
+          <th>Revision</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @entries.each do |entry| %>
+        <tr class="entry dir">
+          <td class="filename">
+            <%= link_to_if entry.is_dir?,
+                entry.name,
+                { :action => "show",
+                :path => to_path_param(entry.path),
+                :rev => "HEAD" } %>
+          </td>
+          <td class="revision">
+            <%= entry.changeset.format_identifier if entry.changeset %>
+          </td>
+          <td class="comments">
+            <%= truncate(entry.changeset.comments, :length => 50) if entry.changeset %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  </div>
+
+  <h3>Commit log and change files</h3>
+  <div class="download">
+    <%= link_to "DL log and files", :action => "download", :from => params["from"], :to => params["to"], :path => to_path_param(@current_entry_path) %>
+  </div>
+
+  <div class="change_files">
   <% @log.each do |log|
      revision = log[0]
      commit_log = simple_format(log[1]["msg"])
-     files = log[1]["path"]
-  %>
-
-  <hr />
-  <p>revision <%= revision %>:</p>
-  <%= commit_log %>
-  <ul>
-  <% files.each do |file| %>
-    <li><%= file %></li>
+     files = log[1]["path"] %>
+    <hr />
+    <p class="revision">revision <%= revision %>:</p>
+    <p class="commit_log"><%= commit_log %></p>
+    <ul class="files">
+    <% files.each do |file| %>
+      <li><%= file %></li>
+    <% end %>
+    </ul>
   <% end %>
-  </ul>
-  <% end %>
+  </div>
 
 <% end %>
