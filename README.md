@@ -2,8 +2,9 @@
 
 ## 参考
 
-- app/views\repositories/_dir_list_content.html.erb
-- app/controllers/repositories_controller.rb
+- リポジトリのファイル一覧
+  - app/views\repositories/_dir_list_content.html.erb
+  - app/controllers/repositories_controller.rb
 
 ## 役割
 
@@ -34,13 +35,16 @@ Environment:
 
 ### プラグインインストール
 
-$ cd REDMINE_HOME/plugin                                    # Redmineのバージョンによって場所違う
-$ git clone https://github.com/gosyujin/auto_ticket_add.git
+```
+$ cd REDMINE_HOME/plugin # Redmineのバージョンによってpluginディレクトリの場所は違う
+$ git clone http://github.com/gosyujin/auto_ticket_add.git
+```
 
 ### Redmine設定
 
-//  - `管理 => ロールと権限` から `Auto ticket add` にチェックを入れる
-//  - `プロジェクト => 設定 => モジュール` から `Auto ticket add` にチェックを入れる
+- これはやらなくてもいいかも？
+  - `管理 => ロールと権限` から `Auto ticket add` にチェックを入れる
+  - `プロジェクト => 設定 => モジュール` から `Auto ticket add` にチェックを入れる
 - `管理 => 設定 => 認証` から `RESTによるWebサービスを有効にする` にチェックを入れる
 - `個人設定` から `APIアクセスキー` を表示し、メモる`
 
@@ -48,8 +52,10 @@ $ git clone https://github.com/gosyujin/auto_ticket_add.git
 
 - プロジェクトに設定しているリポジトリのフックスクリプトを編集
 
+```
 $ cd REPOSITORY_HOME/hooks
 $ cp post-commit.tmpl post-commit.bat # Windowsの場合
-
+# post-commit.batを編集
 set http_proxy=
 curl -O -s -X GET -H "X-Redmine-API-Key: =82d33ec92eb0bf72390998a875d614a37fce29ec" http://localhost:3000/projects/testproject/auto_ticket/add?revision=%2
+```
