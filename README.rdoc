@@ -1,3 +1,0 @@
-= auto_ticket_add
-
-Description goes here
