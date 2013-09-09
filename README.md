@@ -12,12 +12,13 @@
 
 ※ 履歴にコミットログを出し `Export csv with journals` と組み合わせて使いたい(「関係しているリビジョン」でも見れるけど、csvには出してくれないので)
 
-## 対応
+## 対応リポジトリ
 
 - Subversion
 
 ## 必須
 
+- [Nokogiri](http://nokogiri.org/)
 - cURL
 
 ## 動作環境
